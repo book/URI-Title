@@ -9,8 +9,7 @@ Module::Build->new(
     license => 'perl',
     requires => {
       'Test::More'        => 0,
-      'LWP'               => 0,
-      'LWP:Simple'        => 0,
+      'LWP::Simple'        => 0,
       'File::Type'        => '0.22',
       'Module::Pluggable' => '1.2',
       'MP3::Info'         => 0,
