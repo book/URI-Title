@@ -99,11 +99,8 @@ sub title {
     my $title;
     my $match;
     my $size = 16 * 1024;
-    
-    if ($url =~ /theregister\.co\.uk/i) {
-        $match = '<div class="storyhead">';
 
-    } elsif ($url =~ /timesonline\.co\.uk/i) {
+    if ($url =~ /timesonline\.co\.uk/i) {
         $match = '<span class="headline">';
 
     } elsif ($url =~ /use\.perl\.org\/~([^\/]+).*journal\/\d/i) {
