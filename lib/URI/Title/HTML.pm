@@ -9,7 +9,11 @@ package URI::Title::HTML;
 use warnings;
 use strict;
 use HTML::Entities;
-use Encode qw(decode);
+our $CAN_USE_ENCODE;
+BEGIN {
+  eval { use Encode qw(decode) };
+  $CAN_USE_ENCODE = !$@;
+}
 
 sub types {(
   'text/html',
@@ -59,7 +63,7 @@ sub title {
   $data =~ /$match([^<]+)/im or return; # "Can't find title";
   $title .= $1;
 
-  $title = decode($cset, $title);
+  $title = decode($cset, $title) if $CAN_USE_ENCODE;
   $title =~ s/\s+$//;
   $title =~ s/^\s+//;
   $title =~ s/\n+//g;
