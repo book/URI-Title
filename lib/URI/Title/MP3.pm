@@ -11,37 +11,9 @@ use strict;
 use MP3::Info;
 use File::Temp qw(tempfile);
 
-use LWP::Simple;
-use LWP::UserAgent;
-use HTTP::Request;
-use HTTP::Response;
-
 sub types {(
   'audio/mp3',
-  'default',
 )}
-
-sub get_end {
-  my $url = shift;
-  my (undef, $length) = head($url);
-
-  return unless $length; # We can't get the length, and we're _not_
-                         # going to get the whole thing.
-                         
-  my $size = 1024 * 32;
-  my $start = $length - $size;
-
-  my $ua = LWP::UserAgent->new;
-  $ua->timeout(20);
-  $ua->max_size($size);
-
-  my $req = HTTP::Request->new(GET => $url);
-  $req->header( Range => "bytes=$start-$length" );
-  my $res = $ua->request($req);
-
-  return unless $res->is_success;
-  return $res->content;
-}
 
 sub get_tag {
   my $data = shift;
@@ -67,8 +39,9 @@ sub title {
       my $info = get_mp3info($url);
       $tag->{info} = $info;
     }
+
   } else {
-    $tag = get_tag($data) || get_tag( get_end($url) );
+    $tag = get_tag( $data . URI::Title::get_end($url) );
   }
   return unless $tag;
   return unless ($tag->{ARTIST} or $tag->{TITLE});

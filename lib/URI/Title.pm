@@ -60,24 +60,48 @@ package URI::Title;
 use base qw(Exporter);
 our @EXPORT_OK = qw( title );
 
-our $VERSION = '0.3';
+our $VERSION = '0.5';
 
 use Module::Pluggable (search_path => ['URI::Title'], require => 1 );
 use File::Type;
 
+use LWP::Simple;
 use LWP::UserAgent;
 use HTTP::Request;
 use HTTP::Response;
 
 sub get_limited {
   my $url = shift;
-  my $size = shift || 8*1024;
+  my $size = shift || 16*1024;
   my $ua = LWP::UserAgent->new;
   $ua->timeout(20);
   $ua->max_size($size);
   my $req = HTTP::Request->new(GET => $url);
   $req->header( Range => "bytes=0-$size" );
   my $res = $ua->request($req);
+  return unless $res->is_success;
+  return $res->content;
+}
+
+sub get_end {
+  my $url = shift;
+  my $size = shift || 16*1024;
+
+  my (undef, $length) = head($url);
+
+  return unless $length; # We can't get the length, and we're _not_
+                         # going to get the whole thing.
+
+  my $start = $length - $size;
+
+  my $ua = LWP::UserAgent->new;
+  $ua->timeout(20);
+  $ua->max_size($size);
+
+  my $req = HTTP::Request->new(GET => $url);
+  $req->header( Range => "bytes=$start-$length" );
+  my $res = $ua->request($req);
+
   return unless $res->is_success;
   return $res->content;
 }

@@ -10,10 +10,11 @@ Module::Build->new(
     requires => {
       'Test::More'        => 0,
       'LWP'               => 0,
-      'File::Type'        => 0,
+      'LWP:Simple'        => 0,
+      'File::Type'        => '0.22',
       'Module::Pluggable' => 0,
-#      'MP3::Info'         => 0,
-#      'Image::Size'       => 0,
+      'MP3::Info'         => 0,
+      'Image::Size'       => 0,
     },
     create_makefile_pl => 'traditional',
 )->create_build_script;

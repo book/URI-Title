@@ -12,7 +12,7 @@ use HTML::Entities;
 
 sub types {(
   'text/html',
-#  'default',
+  'default',
 )}
 
 sub title {
