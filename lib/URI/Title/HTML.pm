@@ -53,7 +53,9 @@ sub title {
   $data =~ /$match([^<]+)/im or return; # "Can't find title";
 
   # TODO - work this out from the headers of the HTML
-  my $cset ||= "utf8";
+  if ($data =~ /; content-type=\"?([\w-]+)/) {
+    $cset = lc($1);
+  }
 
   $title .= decode($cset, $1);
   $title =~ s/\s+$//;
