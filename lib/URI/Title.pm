@@ -60,7 +60,7 @@ package URI::Title;
 use base qw(Exporter);
 our @EXPORT_OK = qw( title );
 
-our $VERSION = '0.3dev';
+our $VERSION = '0.3';
 
 use LWP::UserAgent;
 use HTTP::Request;
