@@ -56,6 +56,8 @@ problem, and got bits done in a nicer way than I did.
 =cut
 
 package URI::Title;
+use warnings;
+use strict;
 
 use base qw(Exporter);
 our @EXPORT_OK = qw( title );
@@ -80,7 +82,13 @@ sub get_limited {
   $req->header( Range => "bytes=0-$size" );
   my $res = $ua->request($req);
   return unless $res->is_success;
-  return $res->content;
+  return $res->content unless wantarray;
+  my $cset = "iso-8859-1"; # default;
+  my $ct = $res->header("Content-type");
+  if ($ct =~ /charset=\"?(.*)\"?$/) {
+    $cset = $1;
+  }
+  return ($res->content, $cset);
 }
 
 sub get_end {
@@ -103,7 +111,13 @@ sub get_end {
   my $res = $ua->request($req);
 
   return unless $res->is_success;
-  return $res->content;
+  return $res->content unless wantarray;
+  my $cset = "iso-8859-1"; # default;
+  my $ct = $res->header("Content-type");
+  if ($ct =~ /charset=\"?(.*)\"?$/) {
+    $cset = $1;
+  }
+  return ($res->content, $cset);
 }
 
 sub get_all {
@@ -113,7 +127,13 @@ sub get_all {
   my $req = HTTP::Request->new(GET => $url);
   my $res = $ua->request($req);
   return unless $res->is_success;
-  return $res->content;
+  return $res->content unless wantarray;
+  my $cset = "iso-8859-1"; # default;
+  my $ct = $res->header("Content-type");
+  if ($ct =~ /charset=\"?(.*)\"?$/) {
+    $cset = $1;
+  }
+  return ($res->content, $cset);
 }
 
 # cache
@@ -134,25 +154,33 @@ sub title {
   my $data;
   my $url;
   my $type;
-  
+  my $cset = "iso-8859-1"; # default
+
+  # we can be passed a hashref. Keys are url, or data.  
   if (ref($param)) {
     if ($param->{data}) {
       $data = $param->{data};
+      $data = $$data if ref($data); # we can be passed a ref to the data
     } elsif ($param->{url}) {
       $url = $param->{url};
     } else {
       use Carp qw(croak);
       croak("Expected a single parameter, or an 'url' or 'data' key");
     }
+
+  # otherwise, assume we're passed an url
   } else {
-    # url
     $url = $param;
   }
+
   if (!$url and !$data) {
     warn "Need at least an url or data";
     return;
   }
-  if ($url) {
+
+  # If we don't have data, we will have an url, so try to get data.
+  if (!$data) {
+    # url might be a filename
     if (-e $url) {
       local $/ = undef;
       unless (open DATA, $url) {
@@ -161,12 +189,16 @@ sub title {
       }
       $data = <DATA>;
       close DATA;
+      
+    # If not, assume it's an url
     } else {
+      # special case for itms
       if ($url =~ s/^itms:/http:/) {
         $type = "itms";
         $data = 1; # we don't need it, fake it.
+
       } else {
-        $data = get_limited($url);
+        ($data, $cset) = get_limited($url);
       }
     }
   }
@@ -184,7 +216,7 @@ sub title {
   my $handler = $handlers->{$type} || $handlers->{default}
     or return;
 
-  return $handler->title($url, $data, $type);
+  return $handler->title($url, $data, $type, $cset);
 }
 
 1;

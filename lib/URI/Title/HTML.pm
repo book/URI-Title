@@ -9,6 +9,7 @@ package URI::Title::HTML;
 use warnings;
 use strict;
 use HTML::Entities;
+use Encode qw(decode);
 
 sub types {(
   'text/html',
@@ -16,16 +17,14 @@ sub types {(
 )}
 
 sub title {
-  my ($class, $url, $data, $type) = @_;
+  my ($class, $url, $data, $type, $cset) = @_;
 
   my $title;
   my $match;
 
-  if ( $INC{'URI/Title/iTMS.pm'}
-       and $url =~ m!phobos.apple.com!
-       and $data =~ m!(itms://[^']*)!
-     ) {
-    return URI::Title::iTMS->title($url);
+  # special case for the iTMS.
+  if ( $INC{'URI/Title/iTMS.pm'} and $url =~ m!phobos.apple.com! and $data =~ m!(itms://[^']*)! ) {
+    return URI::Title::iTMS->title($1);
   }
 
   if ($url =~ /timesonline\.co\.uk/i) {
@@ -53,12 +52,18 @@ sub title {
 
   $data =~ /$match([^<]+)/im or return; # "Can't find title";
 
-  $title .= $1;
+  # TODO - work this out from the headers of the HTML
+  my $cset ||= "utf8";
+
+  $title .= decode($cset, $1);
   $title =~ s/\s+$//;
   $title =~ s/^\s+//;
   $title =~ s/\n+//g;
   $title =~ s/\s+/ /g;
   $title = decode_entities($title);
+
+  # decode nasty number-encoded entities. Mostly works
+  $title =~ s/(&\#(\d+);?)/chr($2)/eg;
 
   return $title;
 }

@@ -1,3 +1,8 @@
+2004-08-13  Tom Insam  <tom@jerakeen.org>
+
+  * Added quick special case for iTMS urls.
+  * Bumped version to 1.0, I quite like this code now.
+
 2004-05-06  Tom Insam  <tom@jerakeen.org>
   * 0.5 Release
   * Use File::Type to detech mime types and hand off to sub-modules
