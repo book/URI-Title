@@ -170,7 +170,7 @@ sub title {
   return undef unless $data;
 
   my $type = File::Type->new->checktype_contents($data);
-  warn "type is $type\n";
+  #warn "type is $type\n";
 
   my $handlers = handlers();
   my $handler = $handlers->{$type} || $handlers->{default}
