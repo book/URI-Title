@@ -65,9 +65,9 @@ our $VERSION = '0.1';
 use LWP::UserAgent;
 use HTTP::Request;
 use HTTP::Response;
-use File::Type;
+#use File::Type;
 
-sub get_type {
+sub get_16k {
     my $url = shift;
     my $ua = LWP::UserAgent->new;
     $ua->timeout(20);
@@ -79,7 +79,7 @@ sub get_type {
     return $res->content;
 }
 
-sub getall {
+sub get_all {
     my $url = shift;
     my $ua = LWP::UserAgent->new;
     $ua->timeout(20);
@@ -92,9 +92,8 @@ sub getall {
 sub title {
     my $url = shift;
 
-    my $data = get16k($url) or return; # Can't get;
-    my $type = File::Type->new->checktype_contents($data);
-    print STDERR "type is $type\n";
+    my $data = get_16k($url) or return; # Can't get;
+#    my $type = File::Type->new->checktype_contents($data);
 
     my $title;
     my $match;
