@@ -62,7 +62,7 @@ use strict;
 use base qw(Exporter);
 our @EXPORT_OK = qw( title );
 
-our $VERSION = '1';
+our $VERSION = '1.50';
 
 use Module::Pluggable (search_path => ['URI::Title'], require => 1 );
 use File::Type;
@@ -87,7 +87,7 @@ sub get_limited {
   my $ct = $res->header("Content-type");
   if ($ct =~ /charset=\"?([\w-]+)/i) {
     $cset = lc($1);
-    warn "Got charset $cset from URI headers\n";
+    #warn "Got charset $cset from URI headers\n";
   }
   return ($res->content, $cset);
 }
