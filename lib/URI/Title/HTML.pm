@@ -21,6 +21,13 @@ sub title {
   my $title;
   my $match;
 
+  if ( $INC{'URI/Title/iTMS.pm'}
+       and $url =~ m!phobos.apple.com!
+       and $data =~ m!(itms://[^']*)!
+     ) {
+    return URI::Title::iTMS->title($url);
+  }
+
   if ($url =~ /timesonline\.co\.uk/i) {
     $match = '<span class="headline">';
 
