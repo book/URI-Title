@@ -63,9 +63,10 @@ sub title {
   $data =~ /$match([^<]+)/im or return; # "Can't find title";
   $title .= $1;
 
-  if ($CAN_USE_ENCODE) {
-    $title = Encode::decode($cset, $title);
+  if ( $CAN_USE_ENCODE ) {
+    $title = eval { decode($cset, $title) } || $title;
   }
+
   $title =~ s/\s+$//;
   $title =~ s/^\s+//;
   $title =~ s/\n+//g;
