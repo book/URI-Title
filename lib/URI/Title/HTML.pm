@@ -11,7 +11,7 @@ use strict;
 use HTML::Entities;
 our $CAN_USE_ENCODE;
 BEGIN {
-  eval { use Encode qw(decode) };
+  eval { require Encode };
   $CAN_USE_ENCODE = !$@;
 }
 
@@ -63,7 +63,9 @@ sub title {
   $data =~ /$match([^<]+)/im or return; # "Can't find title";
   $title .= $1;
 
-  $title = decode($cset, $title) if $CAN_USE_ENCODE;
+  if ($CAN_USE_ENCODE) {
+    $title = Encode::decode($cset, $title);
+  }
   $title =~ s/\s+$//;
   $title =~ s/^\s+//;
   $title =~ s/\n+//g;
