@@ -62,11 +62,12 @@ our @EXPORT_OK = qw( title );
 
 our $VERSION = '0.3';
 
+use Module::Pluggable (search_path => ['URI::Title'], require => 1 );
+use File::Type;
+
 use LWP::UserAgent;
 use HTTP::Request;
 use HTTP::Response;
-#use File::Type;
-use HTML::Entities;
 
 sub get_limited {
     my $url = shift;
@@ -91,52 +92,46 @@ sub get_all {
     return $res->content;
 }
 
-sub title {
-    my $url = shift;
-
-#    my $type = File::Type->new->checktype_contents($data);
-
-    my $title;
-    my $match;
-    my $size = 16 * 1024;
-
-    if ($url =~ /timesonline\.co\.uk/i) {
-        $match = '<span class="headline">';
-
-    } elsif ($url =~ /use\.perl\.org\/~([^\/]+).*journal\/\d/i) {
-        $match = '<FONT FACE="geneva,verdana,sans-serif" SIZE="1"><B>';
-        $title = "use.perl journal of $1 - ";
-
-    } elsif ($url =~ /pants\.heddley\.com.*#(.*)$/i) {
-        my $id = $1;
-        $match = 'id="a'.$id.'"\/>[^<]*<a[^>]*>';
-        $title = "pants daily chump - ";
-
-    } elsif ($url =~ /paste\.husk\.org/i) {
-        $match = 'Summary: ';
-        $title = "paste - ";
-        return if $mess->{who} eq 'pasty';
-
-    } elsif ($url =~ /independent\.co\.uk/i) {
-        $match = '<h1 class=head1>';
-        $size = 32 * 1024;
-
-    } else {
-        $match = '<title>';
+sub handlers {
+  my @plugins = plugins();
+  my %handlers;
+  for my $plugin (@plugins) {
+    for my $type ($plugin->types) {
+      $handlers{$type} = $plugin;
     }
+  }
+  return \%handlers;
+}
 
-    my $data = get_limited($url, $size) or return; # Can't get;
+sub title {
+  my $param = shift;
+  my $data;
+  my $url;
 
-    $data =~ /$match([^<]+)/im or return; # "Can't find title";
+  if (ref($param)) {
+    if ($param->{data}) {
+      $data = $param->{data};
+    } elsif ($param->{url}) {
+      $url = $param->{url};
+      $data = get_limited($url);
+    } else {
+      use Carp qw(croak);
+      croak("Expected a single parameter, or an 'url' or 'data' key");
+    }
+  } else {
+    # url
+    $url = $param;
+    $data = get_limited($url);
+  }
 
-    $title .= $1;
-    $title =~ s/\s+$//;
-    $title =~ s/^\s+//;
-    $title =~ s/\n+//g;
-    $title =~ s/\s+/ /g;
-    $title = decode_entities($title);
-    return $title;
+  return undef unless $data;
 
+  my $type = File::Type->new->checktype_contents($data);
+  
+  my $handlers = handlers();
+  my $handler = $handlers->{$type} || $handlers->{default};
+  
+  return $handler->title($url, $data);
 }
 
 1;

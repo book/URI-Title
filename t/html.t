@@ -1,6 +1,7 @@
 use warnings;
 use strict;
 use Test::More;
+use lib 'lib';
 use URI::Title qw(title);
 
 require IO::Socket;
@@ -24,7 +25,7 @@ is(
 
 is(
   title('http://theregister.co.uk/content/6/34549.html'),
-  "Warning: lack of technology may harm your prospects",
+  "Warning: lack of technology may harm your prospects | The Register",
   "got register title");
 
 
