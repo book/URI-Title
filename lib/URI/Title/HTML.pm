@@ -70,7 +70,13 @@ sub title {
   $title =~ s/^\s+//;
   $title =~ s/\n+//g;
   $title =~ s/\s+/ /g;
+
+  #use Devel::Peek;
+  #Dump( $title );
+
   $title = decode_entities($title);
+
+  #Dump( $title );
 
   # decode nasty number-encoded entities. Mostly works
   $title =~ s/(&\#(\d+);?)/chr($2)/eg;
