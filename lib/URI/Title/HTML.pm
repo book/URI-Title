@@ -50,14 +50,16 @@ sub title {
     $match = '<title>';
   }
 
-  $data =~ /$match([^<]+)/im or return; # "Can't find title";
 
   # TODO - work this out from the headers of the HTML
-  if ($data =~ /; content-type=\"?([\w-]+)/) {
+  if ($data =~ /charset=\"?([\w-]+)/i) {
     $cset = lc($1);
   }
 
-  $title .= decode($cset, $1);
+  $data =~ /$match([^<]+)/im or return; # "Can't find title";
+  $title .= $1;
+
+  $title = decode($cset, $title);
   $title =~ s/\s+$//;
   $title =~ s/^\s+//;
   $title =~ s/\n+//g;
