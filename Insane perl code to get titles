@@ -1,0 +1,68 @@
+    if (1 || $res->is_success()) {
+        my ($title, $content);
+        $content = $res->content();
+
+        if ($ctype =~ m#audio/mpeg#i) {
+            my $to = $length - 1;
+            my $from = $to - 2048;
+
+            open MP3, ">/tmp/scribot.$$" or die "$!";
+            print MP3 $content;
+            # request the last 2k chunk here and add it
+            $req = HTTP::Request->new(GET => $url);
+            my $ua = LWP::UserAgent->new(max_size => 16384); # agent => $config{agent}, max_size => 16384);
+            print " -> Requesting partial $from-$to/$length for $url\n";
+            $req->header("Range" => "bytes=$from-$to");
+            $res = $ua->request($req);
+            if ($res->is_success()) {
+                print MP3 $res->content();
+            }
+            close MP3;
+            my $info = get_mp3tag("/tmp/scribot.$$");
+            unlink("/tmp/scribot.$$");
+            $title = "'$info->{TITLE}' by $info->{ARTIST}"
+        } elsif ($ctype =~ m#(application|text)/pdf#i) {
+            my $to = $length - 1;
+            my $from = $to - 8192;
+
+            my $ua = LWP::UserAgent->new(agent => "rjpScribot/$ver", max_size => 16384);
+            $req = HTTP::Request->new(GET => $url);
+            print " -> Requesting partial $from-$to/$length for $url\n";
+            $req->header("Range" => "bytes=$from-$to");
+            $res = $ua->request($req);
+            my %fields = ();
+            if ($res->is_success()) {
+                my $content = $res->content();
+                foreach my $i (qw(Producer Creator CreationDate Author Title Subject)) {
+                        my @parts = $content =~ m#/$i \((.*?)\)#mgs;
+                        $fields{$i} = $parts[-1]; # grab the last one, hopefully right
+                }
+            }
+            $title = "";
+            my @parts = ();
+            if ($fields{Title}) {
+                push @parts, "$fields{Title}";
+                if ($fields{Author}) { push @parts, "by $fields{Author}"; }
+                if ($fields{Subject}) { push @parts, "($fields{Subject})"; }
+            }
+            if ($fields{Creator} and $fields{Creator} ne 'Not Available') {
+                push @parts, "creator: $fields{Creator}";
+            }
+            if ($fields{Producer} and $fields{Producer} ne 'Not Available') {
+                push @parts, "produced: $fields{Producer}";
+            }
+            $title = join(' ', @parts);
+        } elsif ($ctype =~ m#image/#) {
+            my ($x, $y) = imgsize(\$content);
+            $title = "$ctype ${x}x${y}";
+        } elsif ($ctype =~ m#html#) {
+print "********** FROBBING THE BODNAZ ****************\n";
+            ($content = $res->content()) =~ m#<title>(.*?)</title>#smgi;
+            $title = $1;
+            chomp($title);
+            $title =~ s/^\s*(.*)\s*$/$1/;
+            $title =~ s/<.*?>//g;
+            $title =~ s/\r//g;
+        } else {
+            $title = "$ctype, $length";
+        }
