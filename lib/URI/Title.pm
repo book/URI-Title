@@ -60,7 +60,7 @@ package URI::Title;
 use base qw(Exporter);
 our @EXPORT_OK = qw( title );
 
-our $VERSION = '0.5';
+our $VERSION = '1';
 
 use Module::Pluggable (search_path => ['URI::Title'], require => 1 );
 use File::Type;
@@ -116,22 +116,25 @@ sub get_all {
   return $res->content;
 }
 
+# cache
+our $HANDLERS;
 sub handlers {
   my @plugins = plugins();
-  my %handlers;
+  return $HANDLERS if $HANDLERS;
   for my $plugin (@plugins) {
     for my $type ($plugin->types) {
-      $handlers{$type} = $plugin;
+      $HANDLERS->{$type} = $plugin;
     }
   }
-  return \%handlers;
+  return $HANDLERS;
 }
 
 sub title {
   my $param = shift;
   my $data;
   my $url;
-
+  my $type;
+  
   if (ref($param)) {
     if ($param->{data}) {
       $data = $param->{data};
@@ -159,7 +162,12 @@ sub title {
       $data = <DATA>;
       close DATA;
     } else {
-      $data = get_limited($url);
+      if ($url =~ s/^itms:/http:/) {
+        $type = "itms";
+        $data = 1; # we don't need it, fake it.
+      } else {
+        $data = get_limited($url);
+      }
     }
   }
   if (!$data) {
@@ -169,7 +177,7 @@ sub title {
 
   return undef unless $data;
 
-  my $type = File::Type->new->checktype_contents($data);
+  $type ||= File::Type->new->checktype_contents($data);
   #warn "type is $type\n";
 
   my $handlers = handlers();
