@@ -68,13 +68,14 @@ use HTTP::Response;
 #use File::Type;
 use HTML::Entities;
 
-sub get_16k {
+sub get_limited {
     my $url = shift;
+    my $size = shift || 8*1024;
     my $ua = LWP::UserAgent->new;
     $ua->timeout(20);
-    $ua->max_size(16384);
+    $ua->max_size($size);
     my $req = HTTP::Request->new(GET => $url);
-    $req->header( Range => 'bytes=0-16384' );
+    $req->header( Range => "bytes=0-$size" );
     my $res = $ua->request($req);
     return unless $res->is_success;
     return $res->content;
@@ -93,30 +94,41 @@ sub get_all {
 sub title {
     my $url = shift;
 
-    my $data = get_16k($url) or return; # Can't get;
 #    my $type = File::Type->new->checktype_contents($data);
 
     my $title;
     my $match;
-
+    my $size = 4 * 1024;
+    
     if ($url =~ /theregister\.co\.uk/i) {
         $match = '<div class="storyhead">';
+
     } elsif ($url =~ /timesonline\.co\.uk/i) {
         $match = '<span class="headline">';
+
     } elsif ($url =~ /use\.perl\.org\/~([^\/]+).*journal\/\d/i) {
         $match = '<FONT FACE="geneva,verdana,sans-serif" SIZE="1"><B>';
         $title = "use.perl journal of $1 - ";
+
     } elsif ($url =~ /pants\.heddley\.com.*#(.*)$/i) {
         my $id = $1;
         $match = 'id="a'.$id.'"\/>[^<]*<a[^>]*>';
         $title = "pants daily chump - ";
+
     } elsif ($url =~ /paste\.husk\.org/i) {
         $match = 'Summary: ';
         $title = "paste - ";
         return if $mess->{who} eq 'pasty';
+
+    } elsif ($url =~ /independent\.co\.uk/i) {
+        $match = '<h1 class=head1>';
+        $size = 32 * 1024;
+
     } else {
         $match = '<title>';
     }
+
+    my $data = get_limited($url, $size) or return; # Can't get;
 
     $data =~ /$match([^<]+)/im or return; # "Can't find title";
 
