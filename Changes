@@ -1,27 +1,31 @@
-2004-09-23  Tom Insam  <tom@jerakeen.org>
+2004-09-23 1.60 Tom Insam  <tom@jerakeen.org>
 
   * Added limited character set support. It mostly sucks, but
     less than it did before.
-    
-2004-08-13  Tom Insam  <tom@jerakeen.org>
+
+
+2004-08-13 1.50 Tom Insam  <tom@jerakeen.org>
 
   * Added quick special case for iTMS urls.
   * Bumped version to 1.0, I quite like this code now.
 
-2004-05-06  Tom Insam  <tom@jerakeen.org>
+
+2004-05-06 0.50 Tom Insam  <tom@jerakeen.org>
   * 0.5 Release
   * Use File::Type to detech mime types and hand off to sub-modules
   * Use Module::Pluggable to discover sub-modules
   * Add Image, MP3 and PDF naming modules
 
-2004-03-16  Tom Insam  <tom@jerakeen.org>
+
+2004-03-16 0.30 Tom Insam  <tom@jerakeen.org>
   * 0.3 Release (Revision 643)
   * Don't run tests without a net connection
   * More special cases.
   * Variable header size downloading for pathological cases
   * Much better whitespace trimming
 
-2004-01-17  Tom Insam  <tom@jerakeen.org>
+
+2004-01-17 0.10 Tom Insam  <tom@jerakeen.org>
   * 0.1 Release. It doesn't suck, much.
   
   

@@ -51,7 +51,7 @@ sub title {
     $match = '<h1 class=head1>';
 
   } else {
-    $match = '<title>';
+    $match = '<title.*?>';
   }
 
 
