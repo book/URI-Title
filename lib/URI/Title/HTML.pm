@@ -8,11 +8,11 @@ use HTML::Entities;
 
 sub types {(
   'text/html',
-  'default',
+#  'default',
 )}
 
 sub title {
-  my ($class, $url, $data) = @_;
+  my ($class, $url, $data, $type) = @_;
 
   my $title;
   my $match;

@@ -70,26 +70,26 @@ use HTTP::Request;
 use HTTP::Response;
 
 sub get_limited {
-    my $url = shift;
-    my $size = shift || 8*1024;
-    my $ua = LWP::UserAgent->new;
-    $ua->timeout(20);
-    $ua->max_size($size);
-    my $req = HTTP::Request->new(GET => $url);
-    $req->header( Range => "bytes=0-$size" );
-    my $res = $ua->request($req);
-    return unless $res->is_success;
-    return $res->content;
+  my $url = shift;
+  my $size = shift || 8*1024;
+  my $ua = LWP::UserAgent->new;
+  $ua->timeout(20);
+  $ua->max_size($size);
+  my $req = HTTP::Request->new(GET => $url);
+  $req->header( Range => "bytes=0-$size" );
+  my $res = $ua->request($req);
+  return unless $res->is_success;
+  return $res->content;
 }
 
 sub get_all {
-    my $url = shift;
-    my $ua = LWP::UserAgent->new;
-    $ua->timeout(20);
-    my $req = HTTP::Request->new(GET => $url);
-    my $res = $ua->request($req);
-    return unless $res->is_success;
-    return $res->content;
+  my $url = shift;
+  my $ua = LWP::UserAgent->new;
+  $ua->timeout(20);
+  my $req = HTTP::Request->new(GET => $url);
+  my $res = $ua->request($req);
+  return unless $res->is_success;
+  return $res->content;
 }
 
 sub handlers {
@@ -127,11 +127,13 @@ sub title {
   return undef unless $data;
 
   my $type = File::Type->new->checktype_contents($data);
-  
+  warn "type is $type\n";
+
   my $handlers = handlers();
-  my $handler = $handlers->{$type} || $handlers->{default};
-  
-  return $handler->title($url, $data);
+  my $handler = $handlers->{$type} || $handlers->{default}
+    or return;
+
+  return $handler->title($url, $data, $type);
 }
 
 1;
