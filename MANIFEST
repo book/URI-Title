@@ -1,5 +1,5 @@
 Build.PL
-META.yaml
+META.yml
 Makefile.PL
 Changes
 lib/URI/Title.pm
