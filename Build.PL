@@ -12,7 +12,7 @@ Module::Build->new(
       'LWP'               => 0,
       'LWP:Simple'        => 0,
       'File::Type'        => '0.22',
-      'Module::Pluggable' => 0,
+      'Module::Pluggable' => '1.2',
       'MP3::Info'         => 0,
       'Image::Size'       => 0,
     },
