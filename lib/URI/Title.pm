@@ -66,6 +66,7 @@ use LWP::UserAgent;
 use HTTP::Request;
 use HTTP::Response;
 #use File::Type;
+use HTML::Entities;
 
 sub get_16k {
     my $url = shift;
@@ -122,6 +123,8 @@ sub title {
     $title .= $1;
     $title =~ s/\s+$//;
     $title =~ s/^\s+//;
+    $title =~ s/\n+//g;
+    $title = decode_entities($title);
     return $title;
 
 }
