@@ -98,7 +98,7 @@ sub title {
 
     my $title;
     my $match;
-    my $size = 4 * 1024;
+    my $size = 16 * 1024;
     
     if ($url =~ /theregister\.co\.uk/i) {
         $match = '<div class="storyhead">';
