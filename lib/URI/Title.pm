@@ -85,8 +85,9 @@ sub get_limited {
   return $res->content unless wantarray;
   my $cset = "iso-8859-1"; # default;
   my $ct = $res->header("Content-type");
-  if ($ct =~ /charset=\"?(.*)\"?$/) {
-    $cset = $1;
+  if ($ct =~ /charset=\"?([\w-]+)/i) {
+    $cset = lc($1);
+    warn "Got charset $cset from URI headers\n";
   }
   return ($res->content, $cset);
 }
