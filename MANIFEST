@@ -8,3 +8,4 @@ NINJA
 t/00bootstrap.t
 t/failure.t
 t/html.t
+title.pl
