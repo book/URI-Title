@@ -113,7 +113,6 @@ sub title {
       $data = $param->{data};
     } elsif ($param->{url}) {
       $url = $param->{url};
-      $data = get_limited($url);
     } else {
       use Carp qw(croak);
       croak("Expected a single parameter, or an 'url' or 'data' key");
@@ -121,7 +120,27 @@ sub title {
   } else {
     # url
     $url = $param;
-    $data = get_limited($url);
+  }
+  if (!$url and !$data) {
+    warn "Need at least an url or data";
+    return;
+  }
+  if ($url) {
+    if (-e $url) {
+      local $/ = undef;
+      unless (open DATA, $url) {
+        warn "$url looks like a file and isn't";
+        return;
+      }
+      $data = <DATA>;
+      close DATA;
+    } else {
+      $data = get_limited($url);
+    }
+  }
+  if (!$data) {
+    warn "Can't get content for $url";
+    return;
   }
 
   return undef unless $data;

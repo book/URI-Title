@@ -1,3 +1,9 @@
+=head NAME
+
+URI::Title::Image - get titles of images
+
+=cut
+
 package URI::Title::Image;
 use warnings;
 use strict;
@@ -8,13 +14,15 @@ sub types {(
   'image/gif',
   'image/jpg',
   'image/jpeg',
+  'image/png',
 )}
 
 sub title {
   my ($class, $url, $data, $type) = @_;
 
   my ($x, $y) = imgsize(\$data);
-  return "image: ($type) $x x $y";
+  $type =~ s!^[^/]*/!!;
+  return "$type ($x x $y)";
 }
 
 1;

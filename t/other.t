@@ -20,11 +20,11 @@ if ($s) {
 
 is(
   title('http://jerakeen.org/images/thoth.gif'),
-  "image: (image/gif) 144 x 99",
+  "gif (144 x 99)",
   "got title for jerakeen.org/images/thoth.gif");
 
 is(
   title('http://jerakeen.org/test/uri-title-test.mp3'),
-  "mp3: Ashley Pomeroy - Sand",
+  "Ashley Pomeroy - Sand",
   "got title for jerakeen.org/test/uri-title-test.mp3");
 

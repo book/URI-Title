@@ -1,9 +1,13 @@
+=head NAME
+
+URI::Title::HTML - get titles of html files
+
+=cut
+
 package URI::Title::HTML;
 
 use warnings;
 use strict;
-
-
 use HTML::Entities;
 
 sub types {(
