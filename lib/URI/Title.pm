@@ -136,6 +136,7 @@ sub title {
     $title =~ s/\s+$//;
     $title =~ s/^\s+//;
     $title =~ s/\n+//g;
+    $title =~ s/\s+/ /g;
     $title = decode_entities($title);
     return $title;
 
