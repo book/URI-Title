@@ -1,7 +1,7 @@
 #!perl -w
 use strict;
 use lib qw(lib ../lib);
-use Test::More;
+use Test::More no_plan => 1;
 
 use URI::Title qw(title);
 

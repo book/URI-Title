@@ -7,7 +7,9 @@ URI::Title - get the titles of things on the web in a sensible way
 package URI::Title;
 
 use base qw(Exporter);
-out @EXPORT = qw( title );
+our @EXPORT = qw( title );
+
+our $VERSION = '0.1';
 
 use LWP::UserAgent;
 use HTTP::Request;
