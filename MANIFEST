@@ -1,0 +1,10 @@
+Build.PL
+META.yaml
+Makefile.PL
+Changes
+lib/URI/Title.pm
+MANIFEST
+NINJA
+t/00bootstrap.t
+t/failure.t
+t/html.t
