@@ -19,8 +19,8 @@ if ($s) {
 }
 
 is(
-  title('http://jerakeen.org'),
-  "jerakeen.org",
+  title('http://jerakeen.org/test/uri-title.html'),
+  "URI::Title test",
   "got title for jerakeen.org");
 
 is(
