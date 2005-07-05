@@ -38,9 +38,9 @@ sub title {
     $match = '<FONT FACE="geneva,verdana,sans-serif" SIZE="1"><B>';
     $title = "use.perl journal of $1 - ";
 
-  } elsif ($url =~ /pants\.heddley\.com.*#(.*)$/i) {
-    my $id = $1;
-    $match = 'id="a'.$id.'"\/>[^<]*<a[^>]*>';
+  } elsif ($url =~ /(pants\.heddley\.com|dailychump\.org).*#(.*)$/i) {
+    my $id = $2;
+    $match = 'id="a'.$id.'.*?>.*?>.*?>';
     $title = "pants daily chump - ";
 
   } elsif ($url =~ /paste\.husk\.org/i) {
