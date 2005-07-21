@@ -1,3 +1,8 @@
+2005-07-21 1.61 Tom Insam  <tom@jerakeen.org>
+
+  * Fix tiny test breakage
+  * Better charset support
+
 2004-09-23 1.60 Tom Insam  <tom@jerakeen.org>
 
   * Added limited character set support. It mostly sucks, but
