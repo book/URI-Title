@@ -11,7 +11,7 @@ use strict;
 use HTML::Entities;
 our $CAN_USE_ENCODE;
 BEGIN {
-  eval { require Encode };
+  eval { require Encode; Encode->import('decode') };
   $CAN_USE_ENCODE = !$@;
 }
 
@@ -64,7 +64,7 @@ sub title {
   $title .= $1;
 
   if ( $CAN_USE_ENCODE ) {
-    $title = eval { decode($cset, $title) } || $title;
+    $title = eval { decode('utf-8', $title, 1) } ||  eval { decode($cset, $title) } || $title;
   }
 
   $title =~ s/\s+$//;
