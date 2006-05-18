@@ -1,3 +1,9 @@
+2006-05-18 1.62 Tom Insam  <tom@jerakeen.org>
+
+  * character set support that actually _works_ - we also try utf-8
+    first always, because people lie.
+  * Fix for servers that don't respect the Range header.
+
 2005-07-21 1.61 Tom Insam  <tom@jerakeen.org>
 
   * Fix tiny test breakage
