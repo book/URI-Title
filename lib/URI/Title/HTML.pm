@@ -24,7 +24,9 @@ sub title {
   my ($class, $url, $data, $type, $cset) = @_;
 
   my $title;
-  my $match;
+  my $special_case;
+
+  my $default_match = '<title.*?>(.+?)</title';
 
   # special case for the iTMS.
   if ( $INC{'URI/Title/iTMS.pm'} and $url =~ m!phobos.apple.com! and $data =~ m!(itms://[^']*)! ) {
@@ -32,23 +34,21 @@ sub title {
   }
 
   if ($url =~ /use\.perl\.org\/~([^\/]+).*journal\/\d/i) {
-    $match = '<FONT FACE="geneva,verdana,sans-serif" SIZE="1"><B>(.*?)<';
+    $special_case = '<FONT FACE="geneva,verdana,sans-serif" SIZE="1"><B>(.*+)<';
     $title = "use.perl journal of $1 - ";
 
   } elsif ($url =~ /(pants\.heddley\.com|dailychump\.org).*#(.*)$/i) {
     my $id = $2;
-    $match = 'id="a'.$id.'.*?></a>(.*?)<';
+    $special_case = 'id="a'.$id.'.*?></a>(.+?)<';
     $title = "pants daily chump - ";
 
   } elsif ($url =~ /paste\.husk\.org/i) {
-    $match = 'Summary: (.*?)<';
+    $special_case = 'Summary: (.+?)<';
     $title = "paste - ";
 
   } elsif ($url =~ /independent\.co\.uk/i) {
-    $match = '<h1 class=head1>(.*?)<';
+    $special_case = '<h1 class=head1>(.+?)<';
 
-  } else {
-    $match = '<title.*?>(.*?)</title';
   }
 
 
@@ -57,8 +57,18 @@ sub title {
     $cset = lc($1);
   }
 
-  $data =~ /$match/ims or return; # "Can't find title";
-  $title .= $1;
+  my $found_title;
+  if ($special_case) {
+    warn "special\n";
+    ($found_title) = $data =~ /$special_case/ims;
+  }
+  unless ($found_title) {
+    warn "normal\n";
+    ($found_title) = $data =~ /$default_match/ims;
+  }
+  return unless $found_title;
+  $found_title =~ s/<.*?>//g;
+  $title .= $found_title;
 
   if ( $CAN_USE_ENCODE ) {
     $title = eval { decode('utf-8', $title, 1) } ||  eval { decode($cset, $title) } || $title;
