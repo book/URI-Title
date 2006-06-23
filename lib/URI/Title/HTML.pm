@@ -31,10 +31,7 @@ sub title {
     return URI::Title::iTMS->title($1);
   }
 
-  if ($url =~ /timesonline\.co\.uk/i) {
-    $match = '<span class="headline">(.*?)<';
-
-  } elsif ($url =~ /use\.perl\.org\/~([^\/]+).*journal\/\d/i) {
+  if ($url =~ /use\.perl\.org\/~([^\/]+).*journal\/\d/i) {
     $match = '<FONT FACE="geneva,verdana,sans-serif" SIZE="1"><B>(.*?)<';
     $title = "use.perl journal of $1 - ";
 
