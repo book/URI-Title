@@ -34,7 +34,7 @@ sub title {
   }
 
   if ($url =~ /use\.perl\.org\/~([^\/]+).*journal\/\d/i) {
-    $special_case = '<FONT FACE="geneva,verdana,sans-serif" SIZE="1"><B>(.*+)<';
+    $special_case = '<FONT FACE="geneva,verdana,sans-serif" SIZE="1"><B>(.+?)<';
     $title = "use.perl journal of $1 - ";
 
   } elsif ($url =~ /(pants\.heddley\.com|dailychump\.org).*#(.*)$/i) {
