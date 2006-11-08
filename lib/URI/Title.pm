@@ -67,16 +67,22 @@ our $VERSION = '1.62';
 use Module::Pluggable (search_path => ['URI::Title'], require => 1 );
 use File::Type;
 
-use LWP::Simple;
 use LWP::UserAgent;
 use HTTP::Request;
 use HTTP::Response;
 
+
+sub ua {
+  my $ua = LWP::UserAgent->new;
+  $ua->agent("URI::Title/$VERSION");
+  $ua->timeout(20);
+  return $ua;
+}
+
 sub get_limited {
   my $url = shift;
   my $size = shift || 16*1024;
-  my $ua = LWP::UserAgent->new;
-  $ua->timeout(20);
+  my $ua = ua();
   $ua->max_size($size);
   my $req = HTTP::Request->new(GET => $url);
   $req->header( Range => "bytes=0-$size" );
@@ -102,15 +108,17 @@ sub get_end {
   my $url = shift;
   my $size = shift || 16*1024;
 
-  my (undef, $length) = head($url);
+  my $ua = ua();
+
+  my $request = HTTP::Request->new(HEAD => $url);
+  my $response = $ua->request($request);
+  my $length = $response->header('Content-Length');
 
   return unless $length; # We can't get the length, and we're _not_
                          # going to get the whole thing.
 
   my $start = $length - $size;
 
-  my $ua = LWP::UserAgent->new;
-  $ua->timeout(20);
   $ua->max_size($size);
 
   my $req = HTTP::Request->new(GET => $url);
@@ -129,8 +137,7 @@ sub get_end {
 
 sub get_all {
   my $url = shift;
-  my $ua = LWP::UserAgent->new;
-  $ua->timeout(20);
+  my $ua = ua();
   my $req = HTTP::Request->new(GET => $url);
   my $res = $ua->request($req);
   return unless $res->is_success;

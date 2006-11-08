@@ -9,6 +9,8 @@ package URI::Title::HTML;
 use warnings;
 use strict;
 use HTML::Entities;
+use utf8;
+
 our $CAN_USE_ENCODE;
 BEGIN {
   eval { require Encode; Encode->import('decode') };
