@@ -48,6 +48,9 @@ sub title {
     $special_case = 'Summary: (.+?)<';
     $title = "paste - ";
 
+  } elsif ($url =~ /twitter.com\/.*statuses\/\d+/i) {
+    $special_case = '<div class="desc">\s*<p>\s*(.+?)\s*<';
+
   } elsif ($url =~ /independent\.co\.uk/i) {
     $special_case = '<h1 class=head1>(.+?)<';
 
@@ -61,11 +64,9 @@ sub title {
 
   my $found_title;
   if ($special_case) {
-    warn "special\n";
     ($found_title) = $data =~ /$special_case/ims;
   }
   unless ($found_title) {
-    warn "normal\n";
     ($found_title) = $data =~ /$default_match/ims;
   }
   return unless $found_title;
