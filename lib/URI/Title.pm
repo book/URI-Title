@@ -76,6 +76,7 @@ sub ua {
   my $ua = LWP::UserAgent->new;
   $ua->agent("URI::Title/$VERSION");
   $ua->timeout(20);
+  $ua->default_header('Accept-Encoding' => 'gzip');
   return $ua;
 }
 
@@ -94,14 +95,14 @@ sub get_limited {
   return get_all($url) if $res->code >= 400 and $res->code < 500 and $res->code != 404;
 
   return unless $res->is_success;
-  return $res->content unless wantarray;
+  return $res->decoded_content unless wantarray;
   my $cset = "iso-8859-1"; # default;
   my $ct = $res->header("Content-type");
   if ($ct =~ /charset=\"?([\w-]+)/i) {
     $cset = lc($1);
     #warn "Got charset $cset from URI headers\n";
   }
-  return ($res->content, $cset);
+  return ($res->decoded_content, $cset);
 }
 
 sub get_end {
@@ -126,13 +127,13 @@ sub get_end {
   my $res = $ua->request($req);
 
   return unless $res->is_success;
-  return $res->content unless wantarray;
+  return $res->decoded_content unless wantarray;
   my $cset = "iso-8859-1"; # default;
   my $ct = $res->header("Content-type");
   if ($ct =~ /charset=\"?(.*)\"?$/) {
     $cset = $1;
   }
-  return ($res->content, $cset);
+  return ($res->decoded_content, $cset);
 }
 
 sub get_all {
@@ -141,13 +142,13 @@ sub get_all {
   my $req = HTTP::Request->new(GET => $url);
   my $res = $ua->request($req);
   return unless $res->is_success;
-  return $res->content unless wantarray;
+  return $res->decoded_content unless wantarray;
   my $cset = "iso-8859-1"; # default;
   my $ct = $res->header("Content-type");
   if ($ct =~ /charset=\"?(.*)\"?$/) {
     $cset = $1;
   }
-  return ($res->content, $cset);
+  return ($res->decoded_content, $cset);
 }
 
 # cache
