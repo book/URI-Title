@@ -55,6 +55,9 @@ sub title {
   } elsif ($url =~ /independent\.co\.uk/i) {
     $special_case = '<h1 class=head1>(.+?)<';
 
+  } elsif ($url =~ /www\.hs\.fi\/english\/article/i) {
+    $special_case = '<h1>(.+?)</h1>';
+  
   }
 
 
