@@ -49,7 +49,7 @@ sub title {
     $title = "paste - ";
 
   } elsif ($url =~ /twitter.com\/(.*?)\/statuses\/\d+/i) {
-    $special_case = '<div class="desc">\s*<p>\s*(.+?)\s*<';
+    $special_case = '<div class="desc">\s*<p>\s*(.+?)\s*</p';
     $title = "twitter by $1 - ";
 
   } elsif ($url =~ /independent\.co\.uk/i) {
