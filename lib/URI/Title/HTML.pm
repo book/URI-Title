@@ -66,6 +66,11 @@ sub title {
     $cset = lc($1);
   }
 
+  if ( $CAN_USE_ENCODE ) {
+    $data = eval { decode('utf-8', $data, 1) } ||  eval { decode($cset, $data, 1) } || $data;
+  }
+  
+
   my $found_title;
   if ($special_case) {
     ($found_title) = $data =~ /$special_case/ims;
@@ -77,9 +82,6 @@ sub title {
   $found_title =~ s/<.*?>//g;
   $title .= $found_title;
 
-  if ( $CAN_USE_ENCODE ) {
-    $title = eval { decode('utf-8', $title, 1) } ||  eval { decode($cset, $title) } || $title;
-  }
 
   $title =~ s/\s+$//;
   $title =~ s/^\s+//;
