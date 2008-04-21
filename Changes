@@ -1,5 +1,8 @@
-2007-xx-xx 1.63
+2007-04-21 1.70 Tom Insam  <tom@jerakeen.org>
   * Added special case for Helsingin Sanomat URLs.
+  * Supressed warnings if imgsize can't get an image size (from Dagfinn Ilmari Mannsaker)
+  * Fixed some more nagging unicode issues. Bah, unicode.
+  * Send a real user-agent, to prevent people that hard-code a block of the default Perl useragent from blocking us.
 
 2006-05-18 1.62 Tom Insam  <tom@jerakeen.org>
 

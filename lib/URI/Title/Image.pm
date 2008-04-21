@@ -22,6 +22,7 @@ sub title {
 
   my ($x, $y) = imgsize(\$data);
   $type =~ s!^[^/]*/!!;
+  return $type unless $x && $y;
   return "$type ($x x $y)";
 }
 
