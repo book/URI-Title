@@ -87,6 +87,7 @@ sub get_limited {
   $ua->max_size($size);
   my $req = HTTP::Request->new(GET => $url);
   $req->header( Range => "bytes=0-$size" );
+  $req->header( "Accept-Encoding" => "" ); # vox sends invalid gzipped data?
   my $res = $ua->request($req);
 
   # some servers don't like the Range header. If we
