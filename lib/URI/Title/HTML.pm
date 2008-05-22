@@ -81,6 +81,7 @@ sub title {
   if (!$found_title) {
     ($found_title) = $data =~ /$default_match/ims;
   }
+  $found_title =~ s/<sup>(.+?)<\/sup>/^$1/g; # for the google math output
   $found_title =~ s/<.*?>//g;
   return unless $found_title;
   $title .= $found_title;
