@@ -70,6 +70,7 @@ sub title {
     $special_case = '<h1>(.+?)</h1>';
   
   } elsif ($url =~ /google.com/i and $data =~ /calc_img/) {
+    # google can be used as a calculator. Try to find the result.
     $special_case = 'calc_img.*<td nowrap>(.+?)</td';
   
   }
