@@ -1,3 +1,9 @@
+2008-06-19 1.80 Tom Insam  <tom@jerakeen.org>
+  * Twitter support
+  * Google calculator support
+  * Too many irritating corner-case bugfixes to list.
+  * Claim that we don't do gzip in some cases, to avoid evil
+
 2007-04-21 1.70 Tom Insam  <tom@jerakeen.org>
   * Added special case for Helsingin Sanomat URLs.
   * Supressed warnings if imgsize can't get an image size (from Dagfinn Ilmari Mannsaker)
