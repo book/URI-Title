@@ -1,5 +1,5 @@
 use ExtUtils::MakeMaker;
-require 5.8.1;
+require 5.008001;
 
 WriteMakefile(
     'NAME' => 'URI::Title',
