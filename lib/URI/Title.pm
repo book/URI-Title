@@ -47,6 +47,13 @@ Many, many, many things. Still unimplemented:
 
 =item Better error reporting.
 
+=head1 AUTHOR
+
+Tom Insam E<lt>tom@jerakeen.orgE<gt>
+
+This program is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.
+
 =head1 CREDITS
 
 Invented because of a conversation with rjp, who contributed some eyeball-melting and
