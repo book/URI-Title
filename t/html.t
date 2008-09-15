@@ -23,9 +23,8 @@ if ($s) {
 #  "URI::Title test",
 #  "got title for jerakeen.org");
 
-is(
-  title('http://theregister.co.uk/content/6/34549.html'),
-  "Warning: lack of technology may harm your prospects | The Register",
+ok(
+  title('http://theregister.co.uk/content/6/34549.html') =~ /lack of technology may harm your prospects/,
   "got register title");
 
 
