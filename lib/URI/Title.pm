@@ -69,7 +69,7 @@ use strict;
 use base qw(Exporter);
 our @EXPORT_OK = qw( title );
 
-our $VERSION = '1.81';
+our $VERSION = '1.82';
 
 use Module::Pluggable (search_path => ['URI::Title'], require => 1 );
 use File::Type;
@@ -95,7 +95,8 @@ sub get_limited {
   my $req = HTTP::Request->new(GET => $url);
   $req->header( Range => "bytes=0-$size" );
   $req->header( "Accept-Encoding" => "" ); # vox sends invalid gzipped data?
-  my $res = $ua->request($req);
+  my $res = eval { $ua->request($req) };
+  return unless $res; # useragent explodes for non-valid uris
 
   # some servers don't like the Range header. If we
   # get an odd 4xx response that isn't 404, just try getting
@@ -121,6 +122,7 @@ sub get_end {
 
   my $request = HTTP::Request->new(HEAD => $url);
   my $response = $ua->request($request);
+  return unless $response; # useragent explodes for non-valid uris
   my $length = $response->header('Content-Length');
 
   return unless $length; # We can't get the length, and we're _not_
@@ -133,6 +135,7 @@ sub get_end {
   my $req = HTTP::Request->new(GET => $url);
   $req->header( Range => "bytes=$start-$length" );
   my $res = $ua->request($req);
+  return unless $res; # useragent explodes for non-valid uris
 
   return unless $res->is_success;
   return $res->decoded_content unless wantarray;

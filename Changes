@@ -1,3 +1,6 @@
+2008-09-30 1.82 Tom Insam  <tom@jerakeen.org>
+  * Latest LWP-UserAgent is pickier about what you pass it as a URI - fixed.
+
 2008-06-19 1.81 Tom Insam  <tom@jerakeen.org>
   * fix changes for the Register title
   * clearer licensing
