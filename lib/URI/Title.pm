@@ -102,16 +102,17 @@ sub get_limited {
   # get an odd 4xx response that isn't 404, just try getting
   # the full thing. This may be a little impolite.
   return get_all($url) if $res->code >= 400 and $res->code < 500 and $res->code != 404;
-
   return unless $res->is_success;
-  return $res->decoded_content unless wantarray;
+  if (!wantarray) {
+    return $res->decoded_content || $res->content;
+  }
   my $cset = "iso-8859-1"; # default;
   my $ct = $res->header("Content-type");
-  if ($ct =~ /charset=\"?([\w-]+)/i) {
+  if ($ct =~ /charset\s*=\>?\s*\"?([\w-]+)/i) {
     $cset = lc($1);
     #warn "Got charset $cset from URI headers\n";
   }
-  return ($res->decoded_content, $cset);
+  return ($res->decoded_content || $res->content, $cset);
 }
 
 sub get_end {
