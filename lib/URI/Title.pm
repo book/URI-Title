@@ -89,7 +89,7 @@ sub ua {
 
 sub get_limited {
   my $url = shift;
-  my $size = shift || 16*1024;
+  my $size = shift || 32*1024;
   my $ua = ua();
   $ua->max_size($size);
   my $req = HTTP::Request->new(GET => $url);
