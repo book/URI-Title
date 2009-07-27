@@ -69,7 +69,7 @@ use strict;
 use base qw(Exporter);
 our @EXPORT_OK = qw( title );
 
-our $VERSION = '1.82';
+our $VERSION = '1.84';
 
 use Module::Pluggable (search_path => ['URI::Title'], require => 1 );
 use File::Type;
@@ -225,6 +225,9 @@ sub title {
         $data = 1; # we don't need it, fake it.
 
       } else {
+        # special case for spotify
+        $url =~ s{^(?:http://open.spotify.com/|spotify:)(\w+)[:/]}{http://spotify.url.fi/$1/};
+
         ($data, $cset) = get_limited($url);
       }
     }
