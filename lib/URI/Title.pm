@@ -227,6 +227,9 @@ sub title {
       } else {
         # special case for spotify
         $url =~ s{^(?:http://open.spotify.com/|spotify:)(\w+)[:/]}{http://spotify.url.fi/$1/};
+        
+        # special case for twitter
+        $url =~ s{^https?://twitter\.com/\#\!/}{http://twitter.com/};
 
         ($data, $cset) = get_limited($url);
       }
