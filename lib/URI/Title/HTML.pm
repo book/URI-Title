@@ -61,7 +61,7 @@ sub title {
 
   } elsif ($url =~ /twitter.com\/(.*?)\/status(es)?\/\d+/i) {
     $special_case = '<span class="entry-content">(.+?)</span';
-    $title = "twitter by $1 - ";
+    $title = "twitter - ";
 
   } elsif ($url =~ /independent\.co\.uk/i) {
     $special_case = '<h1 class=head1>(.+?)<';
