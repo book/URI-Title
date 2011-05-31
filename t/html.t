@@ -28,5 +28,5 @@ ok(
   "got register title");
 
 ok(
-  title('http://twitter.com/al3x/status/1039647490') eq 'twitter by al3x - Arianna Huffington: not a good saleswoman for blogging.',
+  title('http://twitter.com/al3x/status/1039647490') eq 'twitter - Arianna Huffington: not a good saleswoman for blogging.',
   "got Twitter status");
