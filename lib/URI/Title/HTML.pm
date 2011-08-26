@@ -60,7 +60,7 @@ sub title {
     $title = "paste - ";
 
   } elsif ($url =~ /twitter.com\/(.*?)\/status(es)?\/\d+/i) {
-    $special_case = '<span class="entry-content">(.+?)</span';
+    $special_case = '<meta content="([^\"]+)" name="description"';
     $title = "twitter - ";
 
   } elsif ($url =~ /independent\.co\.uk/i) {
