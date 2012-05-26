@@ -69,7 +69,7 @@ use strict;
 use base qw(Exporter);
 our @EXPORT_OK = qw( title );
 
-our $VERSION = '1.85';
+our $VERSION = '1.86';
 
 use Module::Pluggable (search_path => ['URI::Title'], require => 1 );
 use File::Type;

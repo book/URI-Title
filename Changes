@@ -1,3 +1,6 @@
+2012-05-26 1.85 Tom Insam <tom@movieos.org>
+  * Twitter suport fixed for non-javascript anchor links (yay)
+
 2009-07-27 1.84 Tom Insam <tom@jerakeen.org>
   * Spotify titling support from https://rt.cpan.org/Public/Bug/Display.html?id=48231
   
