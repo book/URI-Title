@@ -47,6 +47,8 @@ Many, many, many things. Still unimplemented:
 
 =item Better error reporting.
 
+=back
+
 =head1 AUTHOR
 
 Tom Insam E<lt>tom@jerakeen.orgE<gt>
