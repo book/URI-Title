@@ -1,65 +1,65 @@
-2012-05-26 1.86 Tom Insam <tom@movieos.org>
+1.86 2012-05-26 Tom Insam <tom@movieos.org>
   * Twitter suport fixed for non-javascript anchor links (yay)
 
-2011-06-02 1.85 Tom Insam <tom@movieos.org>
+1.85 2011-06-02 Tom Insam <tom@movieos.org>
   * Twitter suport fixed for javascript anchor links (ugh)
 
-2009-07-27 1.84 Tom Insam <tom@jerakeen.org>
+1.84 2009-07-27 Tom Insam <tom@jerakeen.org>
   * Spotify titling support from https://rt.cpan.org/Public/Bug/Display.html?id=48231
 
-2008-10-18 1.83 Paul Mison <cpan@husk.org>
+1.83 2008-10-18 Paul Mison <cpan@husk.org>
   * Work around a change in Twitter HTML
 
-2008-09-30 1.82 Tom Insam  <tom@jerakeen.org>
+1.82 2008-09-30 Tom Insam <tom@jerakeen.org>
   * Latest LWP-UserAgent is pickier about what you pass it as a URI - fixed.
 
-2008-06-19 1.81 Tom Insam  <tom@jerakeen.org>
+1.81 2008-06-19 Tom Insam <tom@jerakeen.org>
   * fix changes for the Register title
   * clearer licensing
 
-2008-06-19 1.80 Tom Insam  <tom@jerakeen.org>
+1.80 2008-06-19 Tom Insam <tom@jerakeen.org>
   * Twitter support
   * Google calculator support
   * Too many irritating corner-case bugfixes to list.
   * Claim that we don't do gzip in some cases, to avoid evil
 
-2008-04-21 1.70 Tom Insam  <tom@jerakeen.org>
+1.70 2008-04-21 Tom Insam <tom@jerakeen.org>
   * Added special case for Helsingin Sanomat URLs.
   * Supressed warnings if imgsize can't get an image size (from Dagfinn Ilmari Mannsaker)
   * Fixed some more nagging unicode issues. Bah, unicode.
   * Send a real user-agent, to prevent people that hard-code a block of the default Perl useragent from blocking us.
 
-2006-05-18 1.62 Tom Insam  <tom@jerakeen.org>
+1.62 2006-05-18 Tom Insam <tom@jerakeen.org>
 
   * character set support that actually _works_ - we also try utf-8
     first always, because people lie.
   * Fix for servers that don't respect the Range header.
 
-2005-07-21 1.61 Tom Insam  <tom@jerakeen.org>
+1.61 2005-07-21 Tom Insam <tom@jerakeen.org>
 
   * Fix tiny test breakage
   * Better charset support
 
-2004-09-23 1.60 Tom Insam  <tom@jerakeen.org>
+1.60 2004-09-23 Tom Insam <tom@jerakeen.org>
 
   * Added limited character set support. It mostly sucks, but
     less than it did before.
 
 
-2004-08-13 1.50 Tom Insam  <tom@jerakeen.org>
+1.50 2004-08-13 Tom Insam <tom@jerakeen.org>
 
   * Added quick special case for iTMS urls.
   * Bumped version to 1.0, I quite like this code now.
 
 
-2004-05-06 0.50 Tom Insam  <tom@jerakeen.org>
+0.50 2004-05-06 Tom Insam <tom@jerakeen.org>
   * 0.5 Release
   * Use File::Type to detech mime types and hand off to sub-modules
   * Use Module::Pluggable to discover sub-modules
   * Add Image, MP3 and PDF naming modules
 
 
-2004-03-16 0.30 Tom Insam  <tom@jerakeen.org>
+0.30 2004-03-16 Tom Insam <tom@jerakeen.org>
   * 0.3 Release (Revision 643)
   * Don't run tests without a net connection
   * More special cases.
@@ -67,7 +67,5 @@
   * Much better whitespace trimming
 
 
-2004-01-17 0.10 Tom Insam  <tom@jerakeen.org>
+0.10 2004-01-17 Tom Insam <tom@jerakeen.org>
   * 0.1 Release. It doesn't suck, much.
-  
-  
