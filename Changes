@@ -60,7 +60,7 @@
 
 
 0.30 2004-03-16 Tom Insam <tom@jerakeen.org>
-  * 0.3 Release (Revision 643)
+  * 0.3 Release
   * Don't run tests without a net connection
   * More special cases.
   * Variable header size downloading for pathological cases
