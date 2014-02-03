@@ -6,7 +6,7 @@
 
 2009-07-27 1.84 Tom Insam <tom@jerakeen.org>
   * Spotify titling support from https://rt.cpan.org/Public/Bug/Display.html?id=48231
-  
+
 2008-10-18 1.83 Paul Mison <cpan@husk.org>
   * Work around a change in Twitter HTML
 
@@ -23,7 +23,7 @@
   * Too many irritating corner-case bugfixes to list.
   * Claim that we don't do gzip in some cases, to avoid evil
 
-2007-04-21 1.70 Tom Insam  <tom@jerakeen.org>
+2008-04-21 1.70 Tom Insam  <tom@jerakeen.org>
   * Added special case for Helsingin Sanomat URLs.
   * Supressed warnings if imgsize can't get an image size (from Dagfinn Ilmari Mannsaker)
   * Fixed some more nagging unicode issues. Bah, unicode.
