@@ -24,7 +24,7 @@ if ($s) {
 #  "got title for jerakeen.org");
 
 ok(
-  title('http://theregister.co.uk/content/6/34549.html') =~ /lack of technology may harm your prospects/,
+  title('http://www.theregister.co.uk/2003/12/16/warning_lack_of_technology_may/') =~ /lack of technology may harm your prospects/,
   "got register title");
 
 # ok(
