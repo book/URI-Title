@@ -45,37 +45,39 @@ sub title {
   }
 
   my $found_title;
-  
-  if ($url =~ /use\.perl\.org\/~([^\/]+).*journal\/\d/i) {
-    $special_case = '<FONT FACE="geneva,verdana,sans-serif" SIZE="1"><B>(.+?)<';
-    $title = "use.perl journal of $1 - ";
 
-  } elsif ($url =~ /(pants\.heddley\.com|dailychump\.org).*#(.*)$/i) {
-    my $id = $2;
-    $special_case = 'id="a'.$id.'.*?></a>(.+?)<';
-    $title = "pants daily chump - ";
+  if ($url) {
+    if ($url =~ /use\.perl\.org\/~([^\/]+).*journal\/\d/i) {
+      $special_case = '<FONT FACE="geneva,verdana,sans-serif" SIZE="1"><B>(.+?)<';
+      $title = "use.perl journal of $1 - ";
 
-  } elsif ($url =~ /paste\.husk\.org/i) {
-    $special_case = 'Summary: (.+?)<';
-    $title = "paste - ";
+    } elsif ($url =~ /(pants\.heddley\.com|dailychump\.org).*#(.*)$/i) {
+      my $id = $2;
+      $special_case = 'id="a'.$id.'.*?></a>(.+?)<';
+      $title = "pants daily chump - ";
 
-  } elsif ($url =~ /twitter.com\/(.*?)\/status(es)?\/\d+/i) {
-    $special_case = '<p class="js-tweet-text tweet-text">([^\<]+)';
-    $title = "twitter - ";
+    } elsif ($url =~ /paste\.husk\.org/i) {
+      $special_case = 'Summary: (.+?)<';
+      $title = "paste - ";
 
-  } elsif ($url =~ /independent\.co\.uk/i) {
-    $special_case = '<h1 class=head1>(.+?)<';
+    } elsif ($url =~ /twitter.com\/(.*?)\/status(es)?\/\d+/i) {
+      $special_case = '<p class="js-tweet-text tweet-text">([^\<]+)';
+      $title = "twitter - ";
 
-  } elsif ($url =~ /www\.hs\.fi\/english\/article/i) {
-    $special_case = '<h1>(.+?)</h1>';
-  
-  } elsif ($url =~ /google.com/i and $data =~ /calc_img/) {
-    # google can be used as a calculator. Try to find the result.
-    $special_case = 'calc_img.*<td nowrap>(.+?)</td';
-  
-  } elsif ($url =~ /spotify\.url\.fi/) {
-    $special_case = '<title>\s*(.+?)\s+&mdash;\s+Decode\s+Spotify\s+URIs\s*</title>';
+    } elsif ($url =~ /independent\.co\.uk/i) {
+      $special_case = '<h1 class=head1>(.+?)<';
 
+    } elsif ($url =~ /www\.hs\.fi\/english\/article/i) {
+      $special_case = '<h1>(.+?)</h1>';
+
+    } elsif ($url =~ /google.com/i and $data =~ /calc_img/) {
+      # google can be used as a calculator. Try to find the result.
+      $special_case = 'calc_img.*<td nowrap>(.+?)</td';
+
+    } elsif ($url =~ /spotify\.url\.fi/) {
+      $special_case = '<title>\s*(.+?)\s+&mdash;\s+Decode\s+Spotify\s+URIs\s*</title>';
+
+    }
   }
 
   if (!$found_title and $special_case) {
