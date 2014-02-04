@@ -1,3 +1,11 @@
+1.87 2014-02-04 Philippe Bruhat (BooK) <book@cpan.org>
+  * New maintainer
+  * Closed RT #82054 (thanks to Jotam Jr. Trejo)
+  * Closed RT #92091 (thanks to Zakariyya Mughal (ZMUGHAL))
+  * Fixed POD syntax
+  * Added some POD tests
+  * Fixed broken tests
+
 1.86 2012-05-26 Tom Insam <tom@movieos.org>
   * Twitter suport fixed for non-javascript anchor links (yay)
 
