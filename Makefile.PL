@@ -14,4 +14,9 @@ WriteMakefile(
         'LWP::Simple' => 0
     },
     LICENSE => "perl",
+    META_MERGE => {
+        resources => {
+            repository => 'http://github.com/book/URI-Title',
+        },
+    },
 );
