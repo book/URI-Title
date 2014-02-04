@@ -1,5 +1,10 @@
+1.88 2014-02-04 Philippe Bruhat (BooK) <book@cpan.org>
+  - Closed RT #41361 (thanks to Kevin Ryde (KRYDE))
+
 1.87 2014-02-04 Philippe Bruhat (BooK) <book@cpan.org>
-  - New maintainer
+  - New maintainer: BOOK
+  - Added github repo to metadata
+  - Added license details to metadata
   - Closed RT #82054 (thanks to Jotam Jr. Trejo)
   - Closed RT #92091 (thanks to Zakariyya Mughal (ZMUGHAL))
   - Fixed POD syntax
