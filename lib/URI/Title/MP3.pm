@@ -1,4 +1,4 @@
-=head NAME
+=head1 NAME
 
 URI::Title::MP3 - get titles of MP3 files
 

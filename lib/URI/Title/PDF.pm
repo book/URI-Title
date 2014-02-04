@@ -1,4 +1,4 @@
-=head NAME
+=head1 NAME
 
 URI::Title::PDF - get titles of PDF files
 

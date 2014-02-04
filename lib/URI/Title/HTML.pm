@@ -1,4 +1,4 @@
-=head NAME
+=head1 NAME
 
 URI::Title::HTML - get titles of html files
 
