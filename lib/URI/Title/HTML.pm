@@ -59,9 +59,9 @@ sub title {
     $special_case = 'Summary: (.+?)<';
     $title = "paste - ";
 
-  # } elsif ($url =~ /twitter.com\/(.*?)\/status(es)?\/\d+/i) {
-  #   $special_case = '<p class="js-tweet-text tweet-text ">([.\n\r]+?)</p>';
-  #   $title = "twitter - ";
+  } elsif ($url =~ /twitter.com\/(.*?)\/status(es)?\/\d+/i) {
+    $special_case = '<p class="js-tweet-text tweet-text">([^\<]+)';
+    $title = "twitter - ";
 
   } elsif ($url =~ /independent\.co\.uk/i) {
     $special_case = '<h1 class=head1>(.+?)<';
