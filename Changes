@@ -30,27 +30,21 @@
   * Send a real user-agent, to prevent people that hard-code a block of the default Perl useragent from blocking us.
 
 1.62 2006-05-18 Tom Insam <tom@jerakeen.org>
-
   * character set support that actually _works_ - we also try utf-8
     first always, because people lie.
   * Fix for servers that don't respect the Range header.
 
 1.61 2005-07-21 Tom Insam <tom@jerakeen.org>
-
   * Fix tiny test breakage
   * Better charset support
 
 1.60 2004-09-23 Tom Insam <tom@jerakeen.org>
-
   * Added limited character set support. It mostly sucks, but
     less than it did before.
 
-
 1.50 2004-08-13 Tom Insam <tom@jerakeen.org>
-
   * Added quick special case for iTMS urls.
   * Bumped version to 1.0, I quite like this code now.
-
 
 0.50 2004-05-06 Tom Insam <tom@jerakeen.org>
   * 0.5 Release
@@ -58,14 +52,12 @@
   * Use Module::Pluggable to discover sub-modules
   * Add Image, MP3 and PDF naming modules
 
-
 0.30 2004-03-16 Tom Insam <tom@jerakeen.org>
   * 0.3 Release
   * Don't run tests without a net connection
   * More special cases.
   * Variable header size downloading for pathological cases
   * Much better whitespace trimming
-
 
 0.10 2004-01-17 Tom Insam <tom@jerakeen.org>
   * 0.1 Release. It doesn't suck, much.
