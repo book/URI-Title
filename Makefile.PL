@@ -12,5 +12,6 @@ WriteMakefile(
         'MP3::Info' => 0,
         'Image::Size' => 0,
         'LWP::Simple' => 0
-    }
+    },
+    LICENSE => "perl",
 );
