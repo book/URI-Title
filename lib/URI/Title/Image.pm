@@ -15,6 +15,7 @@ sub types {(
   'image/jpg',
   'image/jpeg',
   'image/png',
+  'image/x-png',
 )}
 
 sub title {
@@ -22,6 +23,7 @@ sub title {
 
   my ($x, $y) = imgsize(\$data);
   $type =~ s!^[^/]*/!!;
+  $type =~ s!^x-!!;
   return $type unless $x && $y;
   return "$type ($x x $y)";
 }
