@@ -1,3 +1,6 @@
+1.89 2014-09-12 Philippe Bruhat (BooK) <book@cpan.org>
+  - Closed RT #55235 (thanks to James Green (JKG))
+
 1.88 2014-02-04 Philippe Bruhat (BooK) <book@cpan.org>
   - Closed RT #41361 (thanks to Kevin Ryde (KRYDE))
 
