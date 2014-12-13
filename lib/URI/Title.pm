@@ -55,6 +55,10 @@ Tom Insam E<lt>tom@jerakeen.orgE<gt>, original author, 2004-2012.
 
 Philippe Bruhat (BooK) E<lt>book@cpan.orgE<gt>, maintainer, 2014.
 
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2004 Tom Insam.
+
 This program is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 
