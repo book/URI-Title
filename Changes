@@ -1,5 +1,9 @@
 Revision history for Perl module URI::Title
 
+1.90 2014-12-?? Philippe Bruhat (BooK) <book@cpan.org>
+  - Specified min version of perl as 5.006
+  - Misc tidy-ups in Makefile.PL
+
 1.89 2014-09-12 Philippe Bruhat (BooK) <book@cpan.org>
   - Closed RT #55235 (thanks to James Green (JKG))
 

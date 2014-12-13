@@ -67,13 +67,15 @@ problem, and got bits done in a nicer way than I did.
 =cut
 
 package URI::Title;
+
+use 5.006;
 use warnings;
 use strict;
 
 use base qw(Exporter);
 our @EXPORT_OK = qw( title );
 
-our $VERSION = '1.89';
+our $VERSION = '1.90';
 
 use Module::Pluggable (search_path => ['URI::Title'], require => 1 );
 use File::Type;
