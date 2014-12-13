@@ -35,6 +35,11 @@ So, let's solve these issues once.
 only one, the title(url) method. Call it with an url, get the title if possible,
 undef if it wasn't. Very simple.
 
+=head1 SEE ALSO
+
+L<WWW::GetPageTitle> - similar this module, but just handles web pages.
+The author of that module suggests you should use C<URI::Title>.
+
 =head1 TODO
 
 Many, many, many things. Still unimplemented:
