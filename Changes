@@ -1,6 +1,7 @@
 Revision history for Perl module URI::Title
 
 1.90 2014-12-?? Philippe Bruhat (BooK) <book@cpan.org>
+  - Added separate COPYRIGHT AND LICENSE section to pod
   - Specified min version of perl as 5.006
   - Misc tidy-ups in Makefile.PL
 
