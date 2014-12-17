@@ -67,6 +67,7 @@ problem, and got bits done in a nicer way than I did.
 =cut
 
 package URI::Title;
+
 use warnings;
 use strict;
 

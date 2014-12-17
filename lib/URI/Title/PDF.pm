@@ -5,6 +5,7 @@ URI::Title::PDF - get titles of PDF files
 =cut
 
 package URI::Title::PDF;
+
 use warnings;
 use strict;
 

@@ -5,6 +5,7 @@ URI::Title::MP3 - get titles of MP3 files
 =cut
 
 package URI::Title::MP3;
+
 use warnings;
 use strict;
 

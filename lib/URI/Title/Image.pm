@@ -5,6 +5,7 @@ URI::Title::Image - get titles of images
 =cut
 
 package URI::Title::Image;
+
 use warnings;
 use strict;
 
