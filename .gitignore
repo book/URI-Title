@@ -1,0 +1,8 @@
+URI-Title-*
+.build
+cover_db
+*.bak
+*.swp
+*~
+mess
+TODO
