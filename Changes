@@ -1,6 +1,8 @@
 Revision history for Perl module URI::Title
 
-1.90 2014-12-?? Philippe Bruhat (BooK) <book@cpan.org>
+{{$NEXT}}
+
+1.900 2014-58-18 Philippe Bruhat (BooK) <book@cpan.org>
   - now packaged with Dist::Zilla
   - Added separate COPYRIGHT AND LICENSE section to pod (NEILB)
   - Specified min version of perl as 5.006 (NEILB)
