@@ -58,6 +58,8 @@ sub title {
 
 __END__
 
+=for Pod::Coverage::TrustPod types title
+
 =head1 NAME
 
 URI::Title::MP3 - get titles of MP3 files

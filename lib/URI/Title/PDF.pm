@@ -38,6 +38,8 @@ sub title {
 
 __END__
 
+=for Pod::Coverage::TrustPod types title
+
 =head1 NAME
 
 URI::Title::PDF - get titles of PDF files
