@@ -1,9 +1,3 @@
-=head1 NAME
-
-URI::Title::Image - get titles of images
-
-=cut
-
 package URI::Title::Image;
 
 use warnings;
@@ -30,3 +24,11 @@ sub title {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+URI::Title::Image - get titles of images
+
+=cut

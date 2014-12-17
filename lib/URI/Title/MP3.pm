@@ -1,9 +1,3 @@
-=head1 NAME
-
-URI::Title::MP3 - get titles of MP3 files
-
-=cut
-
 package URI::Title::MP3;
 
 use warnings;
@@ -61,3 +55,11 @@ sub title {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+URI::Title::MP3 - get titles of MP3 files
+
+=cut

@@ -1,9 +1,3 @@
-=head1 NAME
-
-URI::Title::PDF - get titles of PDF files
-
-=cut
-
 package URI::Title::PDF;
 
 use warnings;
@@ -41,3 +35,11 @@ sub title {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+URI::Title::PDF - get titles of PDF files
+
+=cut
