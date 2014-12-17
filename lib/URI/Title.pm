@@ -1,80 +1,3 @@
-=head1 NAME
-
-URI::Title - get the titles of things on the web in a sensible way
-
-=head1 SYNOPSIS
-
-  use URI::Title qw( title );
-  my $title = title('http://microsoft.com');
-  print "Title is $title\n";
-
-=head1 DESCRIPTION
-
-I keep having to find the title of things on the web. This seems like a really
-simple request, just get() the object, parse for a title tag, you're done. Ha,
-I wish. There are several problems with this approach:
-
-=over 4
-
-=item What if the resource is on a very slow server? Do we wait for ever or what?
-
-=item What if the resource is a 900 gig file? You don't want to download that.
-
-=item What if the page title isn't in a title tag, but is buried in the HTML somewhere?
-
-=item What if the resource is an MP3 file, or a word document or something?
-
-=item ...
-
-=back
-
-So, let's solve these issues once.
-
-=head1 METHODS
-
-only one, the title(url) method. Call it with an url, get the title if possible,
-undef if it wasn't. Very simple.
-
-=head1 SEE ALSO
-
-L<WWW::GetPageTitle> - similar this module, but just handles web pages.
-The author of that module suggests you should use C<URI::Title>.
-
-=head1 TODO
-
-Many, many, many things. Still unimplemented:
-
-=over 4
-
-=item Get titles of MP3 files, Word Docs, PDFs, etc.
-
-=item Configurable.. well, anything, in fact. Timeout would be a good start.
-
-=item Better error reporting.
-
-=back
-
-=head1 AUTHORS
-
-Tom Insam E<lt>tom@jerakeen.orgE<gt>, original author, 2004-2012.
-
-Philippe Bruhat (BooK) E<lt>book@cpan.orgE<gt>, maintainer, 2014.
-
-=head1 COPYRIGHT AND LICENSE
-
-This software is copyright (c) 2004 Tom Insam.
-
-This program is free software; you can redistribute it
-and/or modify it under the same terms as Perl itself.
-
-=head1 CREDITS
-
-Invented because of a conversation with rjp, who contributed some eyeball-melting and
-as-yet-unused code to get titles from MP3s and PDFs, and hex, who has also solved the
-problem, and got bits done in a nicer way than I did.
-
-=cut
-
 package URI::Title;
 
 use 5.006;
@@ -94,7 +17,7 @@ use HTTP::Request;
 use HTTP::Response;
 
 
-sub ua {
+sub _ua {
   my $ua = LWP::UserAgent->new;
   $ua->agent("URI::Title/$VERSION");
   $ua->timeout(20);
@@ -102,10 +25,10 @@ sub ua {
   return $ua;
 }
 
-sub get_limited {
+sub _get_limited {
   my $url = shift;
   my $size = shift || 32*1024;
-  my $ua = ua();
+  my $ua = _ua();
   $ua->max_size($size);
   my $req = HTTP::Request->new(GET => $url);
   $req->header( Range => "bytes=0-$size" );
@@ -116,7 +39,7 @@ sub get_limited {
   # some servers don't like the Range header. If we
   # get an odd 4xx response that isn't 404, just try getting
   # the full thing. This may be a little impolite.
-  return get_all($url) if $res->code >= 400 and $res->code < 500 and $res->code != 404;
+  return _get_all($url) if $res->code >= 400 and $res->code < 500 and $res->code != 404;
   return unless $res->is_success;
   if (!wantarray) {
     return $res->decoded_content || $res->content;
@@ -130,11 +53,11 @@ sub get_limited {
   return ($res->decoded_content || $res->content, $cset);
 }
 
-sub get_end {
+sub _get_end {
   my $url = shift;
   my $size = shift || 16*1024;
 
-  my $ua = ua();
+  my $ua = _ua();
 
   my $request = HTTP::Request->new(HEAD => $url);
   my $response = $ua->request($request);
@@ -163,9 +86,9 @@ sub get_end {
   return ($res->decoded_content, $cset);
 }
 
-sub get_all {
+sub _get_all {
   my $url = shift;
-  my $ua = ua();
+  my $ua = _ua();
   my $req = HTTP::Request->new(GET => $url);
   my $res = $ua->request($req);
   return unless $res->is_success;
@@ -180,7 +103,7 @@ sub get_all {
 
 # cache
 our $HANDLERS;
-sub handlers {
+sub _handlers {
   my @plugins = plugins();
   return $HANDLERS if $HANDLERS;
   for my $plugin (@plugins) {
@@ -245,7 +168,7 @@ sub title {
         
         $url =~ s{#!}{?_escaped_fragment_=};
 
-        ($data, $cset) = get_limited($url);
+        ($data, $cset) = _get_limited($url);
       }
     }
   }
@@ -258,7 +181,7 @@ sub title {
 
   $type ||= File::Type->new->checktype_contents($data);
 
-  my $handlers = handlers();
+  my $handlers = _handlers();
   my $handler = $handlers->{$type} || $handlers->{default}
     or return;
 
@@ -267,3 +190,72 @@ sub title {
 
 1;
 
+__END__
+
+=head1 NAME
+
+URI::Title - get the titles of things on the web in a sensible way
+
+=head1 SYNOPSIS
+
+  use URI::Title qw( title );
+  my $title = title('http://microsoft.com');
+  print "Title is $title\n";
+
+=head1 DESCRIPTION
+
+I keep having to find the title of things on the web. This seems like a really
+simple request, just get() the object, parse for a title tag, you're done. Ha,
+I wish. There are several problems with this approach:
+
+=over 4
+
+=item What if the resource is on a very slow server? Do we wait for ever or what?
+
+=item What if the resource is a 900 gig file? You don't want to download that.
+
+=item What if the page title isn't in a title tag, but is buried in the HTML somewhere?
+
+=item What if the resource is an MP3 file, or a word document or something?
+
+=item ...
+
+=back
+
+So, let's solve these issues once.
+
+=head1 METHODS
+
+only one, the title(url) method. Call it with an url, get the title if possible,
+undef if it wasn't. Very simple.
+
+=head1 TODO
+
+Many, many, many things. Still unimplemented:
+
+=over 4
+
+=item Get titles of MP3 files, Word Docs, PDFs, etc.
+
+=item Configurable.. well, anything, in fact. Timeout would be a good start.
+
+=item Better error reporting.
+
+=back
+
+=head1 AUTHORS
+
+Tom Insam E<lt>tom@jerakeen.orgE<gt>, original author, 2004-2012.
+
+Philippe Bruhat (BooK) E<lt>book@cpan.orgE<gt>, maintainer, 2014.
+
+This program is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.
+
+=head1 CREDITS
+
+Invented because of a conversation with rjp, who contributed some eyeball-melting and
+as-yet-unused code to get titles from MP3s and PDFs, and hex, who has also solved the
+problem, and got bits done in a nicer way than I did.
+
+=cut

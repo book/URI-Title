@@ -1,10 +1,5 @@
-=head1 NAME
-
-URI::Title::PDF - get titles of PDF files
-
-=cut
-
 package URI::Title::PDF;
+
 use warnings;
 use strict;
 
@@ -16,7 +11,7 @@ sub title {
   my ($class, $url, $data, $type) = @_;
 
   my %fields = ();
-  my $content = URI::Title::get_end($url) or return;
+  my $content = URI::Title::_get_end($url) or return;
   foreach my $i (qw(Producer Creator CreationDate Author Title Subject)) {
     my @parts = $content =~ m#/$i \((.*?)\)#mgs;
     $fields{$i} = $parts[-1]; # grab the last one, hopefully right
@@ -40,3 +35,13 @@ sub title {
 }
 
 1;
+
+__END__
+
+=for Pod::Coverage::TrustPod types title
+
+=head1 NAME
+
+URI::Title::PDF - get titles of PDF files
+
+=cut

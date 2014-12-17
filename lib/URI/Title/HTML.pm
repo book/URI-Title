@@ -1,9 +1,3 @@
-=head1 NAME
-
-URI::Title::HTML - get titles of html files
-
-=cut
-
 package URI::Title::HTML;
 
 use warnings;
@@ -112,3 +106,13 @@ sub title {
 }
 
 1;
+
+__END__
+
+=for Pod::Coverage::TrustPod types title
+
+=head1 NAME
+
+URI::Title::HTML - get titles of html files
+
+=cut
