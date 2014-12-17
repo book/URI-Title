@@ -16,7 +16,7 @@ use HTTP::Request;
 use HTTP::Response;
 
 
-sub ua {
+sub _ua {
   my $ua = LWP::UserAgent->new;
   $ua->agent("URI::Title/$VERSION");
   $ua->timeout(20);
@@ -24,10 +24,10 @@ sub ua {
   return $ua;
 }
 
-sub get_limited {
+sub _get_limited {
   my $url = shift;
   my $size = shift || 32*1024;
-  my $ua = ua();
+  my $ua = _ua();
   $ua->max_size($size);
   my $req = HTTP::Request->new(GET => $url);
   $req->header( Range => "bytes=0-$size" );
@@ -38,7 +38,7 @@ sub get_limited {
   # some servers don't like the Range header. If we
   # get an odd 4xx response that isn't 404, just try getting
   # the full thing. This may be a little impolite.
-  return get_all($url) if $res->code >= 400 and $res->code < 500 and $res->code != 404;
+  return _get_all($url) if $res->code >= 400 and $res->code < 500 and $res->code != 404;
   return unless $res->is_success;
   if (!wantarray) {
     return $res->decoded_content || $res->content;
@@ -52,11 +52,11 @@ sub get_limited {
   return ($res->decoded_content || $res->content, $cset);
 }
 
-sub get_end {
+sub _get_end {
   my $url = shift;
   my $size = shift || 16*1024;
 
-  my $ua = ua();
+  my $ua = _ua();
 
   my $request = HTTP::Request->new(HEAD => $url);
   my $response = $ua->request($request);
@@ -85,9 +85,9 @@ sub get_end {
   return ($res->decoded_content, $cset);
 }
 
-sub get_all {
+sub _get_all {
   my $url = shift;
-  my $ua = ua();
+  my $ua = _ua();
   my $req = HTTP::Request->new(GET => $url);
   my $res = $ua->request($req);
   return unless $res->is_success;
@@ -102,7 +102,7 @@ sub get_all {
 
 # cache
 our $HANDLERS;
-sub handlers {
+sub _handlers {
   my @plugins = plugins();
   return $HANDLERS if $HANDLERS;
   for my $plugin (@plugins) {
@@ -167,7 +167,7 @@ sub title {
         
         $url =~ s{#!}{?_escaped_fragment_=};
 
-        ($data, $cset) = get_limited($url);
+        ($data, $cset) = _get_limited($url);
       }
     }
   }
@@ -180,7 +180,7 @@ sub title {
 
   $type ||= File::Type->new->checktype_contents($data);
 
-  my $handlers = handlers();
+  my $handlers = _handlers();
   my $handler = $handlers->{$type} || $handlers->{default}
     or return;
 

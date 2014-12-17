@@ -10,7 +10,7 @@ sub types {(
   'audio/mp3',
 )}
 
-sub get_tag {
+sub _get_tag {
   my $data = shift;
   my (undef, $temp) = tempfile();
   open FILE, ">$temp" or die $!;
@@ -36,7 +36,7 @@ sub title {
     }
 
   } else {
-    $tag = get_tag( $data . URI::Title::get_end($url) );
+    $tag = _get_tag( $data . URI::Title::_get_end($url) );
   }
   return unless $tag;
   return unless ($tag->{ARTIST} or $tag->{TITLE});

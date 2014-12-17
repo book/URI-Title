@@ -11,7 +11,7 @@ sub title {
   my ($class, $url, $data, $type) = @_;
 
   my %fields = ();
-  my $content = URI::Title::get_end($url) or return;
+  my $content = URI::Title::_get_end($url) or return;
   foreach my $i (qw(Producer Creator CreationDate Author Title Subject)) {
     my @parts = $content =~ m#/$i \((.*?)\)#mgs;
     $fields{$i} = $parts[-1]; # grab the last one, hopefully right
