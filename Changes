@@ -1,11 +1,11 @@
 Revision history for Perl module URI::Title
 
 1.90 2014-12-?? Philippe Bruhat (BooK) <book@cpan.org>
-  - Added separate COPYRIGHT AND LICENSE section to pod
-  - Specified min version of perl as 5.006
-  - Misc tidy-ups in Makefile.PL
+  - now packaged with Dist::Zilla
+  - Added separate COPYRIGHT AND LICENSE section to pod (NEILB)
+  - Specified min version of perl as 5.006 (NEILB)
   - Added WWW::GetPageTitle to SEE ALSO. More for completeness than any belief
-    that anyone might want to use that over URI::Title.
+    that anyone might want to use that over URI::Title. (NEILB)
 
 1.89 2014-09-12 Philippe Bruhat (BooK) <book@cpan.org>
   - Closed RT #55235 (thanks to James Green (JKG))
