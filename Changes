@@ -2,6 +2,11 @@ Revision history for Perl module URI::Title
 
 {{$NEXT}}
 
+1.901 2016-08-21 BOOK
+  - Added various contributors to the META file
+  - Use dzil plugin Test::ReportPrereqs to report prereq versions
+  - Updated release header lines to follow CPAN::Changes::Spec
+
 1.900 2014-12-17 BOOK
   - now packaged with Dist::Zilla
   - Added separate COPYRIGHT AND LICENSE section to pod (NEILB)
