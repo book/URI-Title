@@ -121,7 +121,7 @@ sub title {
   my $type;
   my $cset = "iso-8859-1"; # default
 
-  # we can be passed a hashref. Keys are url, or data.  
+  # we can be passed a hashref. Keys are url, or data.
   if (ref($param)) {
     if ($param->{data}) {
       $data = $param->{data};
@@ -154,7 +154,7 @@ sub title {
       }
       $data = <DATA>;
       close DATA;
-      
+
     # If not, assume it's an url
     } else {
       # special case for itms
@@ -165,7 +165,7 @@ sub title {
       } else {
         # special case for spotify
         $url =~ s{^(?:http://open.spotify.com/|spotify:)(\w+)[:/]}{http://spotify.url.fi/$1/};
-        
+
         $url =~ s{#!}{?_escaped_fragment_=};
 
         ($data, $cset) = _get_limited($url);
