@@ -40,7 +40,7 @@ sub title {
   }
   return unless $tag;
   return unless ($tag->{ARTIST} or $tag->{TITLE});
-  
+
   $tag->{ARTIST} ||= "Unknown Artist";
   $tag->{TITLE} ||= "Unknown Title";
   my $title = "$tag->{ARTIST} - $tag->{TITLE}";

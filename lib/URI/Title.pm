@@ -119,7 +119,7 @@ sub title {
   my $type;
   my $cset = "iso-8859-1"; # default
 
-  # we can be passed a hashref. Keys are url, or data.  
+  # we can be passed a hashref. Keys are url, or data.
   if (ref($param)) {
     if ($param->{data}) {
       $data = $param->{data};
@@ -152,7 +152,7 @@ sub title {
       }
       $data = <DATA>;
       close DATA;
-      
+
     # If not, assume it's an url
     } else {
       # special case for itms
