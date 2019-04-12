@@ -229,6 +229,13 @@ So, let's solve these issues once.
 only one, the title(url) method. Call it with an url, get the title if possible,
 undef if it wasn't. Very simple.
 
+=head1 NOTES
+
+Embedded title metadata of png files can be extracted if you have installed
+either module
+L<Image::ExifTool|https://metacpan.org/pod/Image::ExifTool> or
+L<Image::PNG::Libpng|https://metacpan.org/pod/Image::PNG::Libpng>.
+
 =head1 TODO
 
 Many, many, many things. Still unimplemented:
