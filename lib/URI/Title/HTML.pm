@@ -68,9 +68,6 @@ sub title {
       # google can be used as a calculator. Try to find the result.
       $special_case = 'calc_img.*<td nowrap>(.+?)</td';
 
-    } elsif ($url =~ /spotify\.url\.fi/) {
-      $special_case = '<title>\s*(.+?)\s+&mdash;\s+Decode\s+Spotify\s+URIs\s*</title>';
-
     }
   }
 
