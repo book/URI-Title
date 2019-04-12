@@ -38,9 +38,7 @@ sub pnginfo {
 
 sub pnginfo_exif_tool {
   my ($data_ref) = @_;
-  my $title = "";
-  my $x = 0;
-  my $y = 0;
+
   my $info = Image::ExifTool::ImageInfo($data_ref);
   return ($info->{ImageWidth}, $info->{ImageHeight}, gen_title_str($info->{Title}));
 }
