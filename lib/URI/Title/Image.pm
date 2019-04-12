@@ -13,16 +13,76 @@ sub types {(
   'image/x-png',
 )}
 
+sub got_exif_tool {
+  eval {
+    require Image::ExifTool;
+  };
+  return $@ ? 0 : 1;
+}
+
+sub got_lib_png {
+  eval {
+    require Image::PNG::Libpng;
+  };
+  return $@ ? 0 : 1;
+}
+
+sub pnginfo {
+  if (got_exif_tool()) {
+    return pnginfo_exif_tool( @_ );
+  }
+  else {
+    return pnginfo_lib_png( @_ );
+  }
+}
+
+sub pnginfo_exif_tool {
+  my ($data_ref) = @_;
+
+  my $info = Image::ExifTool::ImageInfo($data_ref);
+  return ($info->{ImageWidth}, $info->{ImageHeight}, $info->{Title});
+}
+
+sub pnginfo_lib_png {
+  my ($data_ref) = @_;
+  my $title = "";
+  my $x = 0;
+  my $y = 0;
+  my $png = Image::PNG::Libpng::read_from_scalar($$data_ref);
+  $x = $png->get_image_width();
+  $y = $png->get_image_height();
+  my $text_chunks = $png->get_text();
+  for (@$text_chunks) {
+    if ($_->{key} eq "Title") {
+      $title = $_->{text};
+      last;
+    }
+  }
+  return ($x, $y, $title);
+}
+
+sub can_extract_png_title {
+  return got_lib_png() || got_exif_tool();
+}
+
 sub title {
   my ($class, $url, $data, $type) = @_;
-  my $name = ( split m{/}, $url )[-1];
 
-  my ($x, $y) = imgsize(\$data);
   $type =~ s!^[^/]*/!!;
   $type =~ s!^x-!!;
+  my $title = "";
+  my $x = 0;
+  my $y = 0;
+  if ( can_extract_png_title() && $type =~ /png/ ) {
+    ($x, $y, $title) = pnginfo(\$data);
+  }
+  else {
+    ($x, $y) = imgsize(\$data);
+  }
+  $title ||= ( split m{/}, $url )[-1];
   return $x && $y
-    ? "$name ($type ${x}x${y})"
-    : "$name ($type)";
+    ? "$title ($type ${x}x${y})"
+    : "$title ($type)";
 }
 
 1;

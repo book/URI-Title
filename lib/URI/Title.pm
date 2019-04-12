@@ -229,6 +229,11 @@ undef if it wasn't. Very simple.
 L<WWW::GetPageTitle> - similar this module, but just handles web pages.
 The author of that module suggests you should use C<URI::Title>.
 
+=head1 NOTES
+
+Embedded title metadata of png files can be extracted if you have installed
+either L<Image::ExifTool> or L<Image::PNG::Libpng>.
+
 =head1 TODO
 
 Many, many, many things. Still unimplemented:
