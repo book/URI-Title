@@ -7,8 +7,6 @@ use strict;
 use base qw(Exporter);
 our @EXPORT_OK = qw( title );
 
-our $VERSION;
-
 use Module::Pluggable (search_path => ['URI::Title'], require => 1 );
 use File::Type;
 
@@ -19,7 +17,7 @@ use HTTP::Response;
 
 sub _ua {
   my $ua = LWP::UserAgent->new;
-  $ua->agent("URI::Title/$VERSION");
+  $ua->agent("URI::Title/$URI::Title::VERSION");
   $ua->timeout(20);
   $ua->default_header('Accept-Encoding' => 'gzip');
   return $ua;
