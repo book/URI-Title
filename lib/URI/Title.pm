@@ -161,9 +161,6 @@ sub title {
         $data = 1; # we don't need it, fake it.
 
       } else {
-        # special case for spotify
-        $url =~ s{^(?:http://open.spotify.com/|spotify:)(\w+)[:/]}{http://spotify.url.fi/$1/};
-        
         $url =~ s{#!}{?_escaped_fragment_=};
 
         ($data, $cset) = _get_limited($url);
