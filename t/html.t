@@ -20,6 +20,3 @@ if ($s) {
 
 is( title('http://perdu.com/'), 'Vous Etes Perdu ?', "got perdu.com title" );
 
-# ok(
-#   title('http://twitter.com/al3x/status/1039647490') eq 'twitter - Arianna Huffington: not a good saleswoman for blogging.',
-#   "got Twitter status");
