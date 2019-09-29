@@ -15,12 +15,14 @@ sub types {(
 
 sub title {
   my ($class, $url, $data, $type) = @_;
+  my $name = ( split m{/}, $url )[-1];
 
   my ($x, $y) = imgsize(\$data);
   $type =~ s!^[^/]*/!!;
   $type =~ s!^x-!!;
-  return $type unless $x && $y;
-  return "$type ($x x $y)";
+  return $x && $y
+    ? "$name ($type ${x}x${y})"
+    : "$name ($type)";
 }
 
 1;
