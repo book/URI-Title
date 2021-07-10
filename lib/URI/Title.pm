@@ -11,6 +11,7 @@ use Module::Pluggable (search_path => ['URI::Title'], require => 1 );
 use File::Type;
 
 use LWP::UserAgent;
+use LWP::Protocol::https;
 use HTTP::Request;
 use HTTP::Response;
 
