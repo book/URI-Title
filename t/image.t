@@ -27,8 +27,5 @@ SKIP: {
 }
 
 sub got_png_libs {
-  eval { require Image::ExifTool };
-  return 1 if !$@;
-  eval { require Image::PNG::Libpng };
-  return $@ ? 0 : 1;
+  eval { require Image::ExifTool } || eval { require Image::PNG::Libpng };
 }
